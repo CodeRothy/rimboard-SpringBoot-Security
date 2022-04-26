@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("/post")
 @Controller
 public class BoardController {
 
@@ -17,47 +18,47 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/list")
     public String list(Model model) {
         List<BoardDto> boardDtoList = boardService.getBoardList();
         model.addAttribute("postList", boardDtoList);
         return "board/list";
     }
 
-    @GetMapping("/post")
+    @GetMapping
     public String post() {
         return "board/post";
     }
 
-    @PostMapping("/post")
+    @PostMapping
     public String write(BoardDto boardDto) {
         boardService.savePost(boardDto);
-        return "redirect:/";
+        return "redirect:/post/list";
     }
 
-    @GetMapping("/post/{id}")
+    @GetMapping("/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
         BoardDto boardDto = boardService.getPost(id);
         model.addAttribute("post", boardDto);
         return "board/detail";
     }
 
-    @GetMapping("/post/edit/{id}")
+    @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model) {
         BoardDto boardDto = boardService.getPost(id);
         model.addAttribute("post", boardDto);
         return "board/edit";
     }
 
-    @PutMapping("/post/edit/{id}")
+    @PutMapping("/edit/{id}")
     public String update( BoardDto boardDto) {
         boardService.savePost(boardDto);
         return "redirect:/post/{id}";
     }
 
-    @DeleteMapping("/post/{id}")
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") Long id) {
         boardService.deletePost(id);
-        return "redirect:/";
+        return "redirect:/post/list";
     }
 }

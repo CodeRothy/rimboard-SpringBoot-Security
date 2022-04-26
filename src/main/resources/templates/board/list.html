@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>게시판 - 목록</title>
-    <link rel='stylesheet' href='/webjars/bootstrap/4.5.0/css/bootstrap.min.css'>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <header th:insert="common/header.html"></header>

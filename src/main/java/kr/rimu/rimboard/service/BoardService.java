@@ -3,6 +3,7 @@ package kr.rimu.rimboard.service;
 import kr.rimu.rimboard.domain.entity.Board;
 import kr.rimu.rimboard.domain.repository.BoardRepository;
 import kr.rimu.rimboard.dto.BoardDto;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,7 +25,7 @@ public class BoardService {
 
     @Transactional
     public List<BoardDto> getBoardList() {
-        List<Board> boardList = boardRepository.findAll();
+        List<Board> boardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC,"id","createdDate"));
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         for (Board board : boardList) {
