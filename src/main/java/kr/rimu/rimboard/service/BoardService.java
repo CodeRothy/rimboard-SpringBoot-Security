@@ -55,4 +55,9 @@ public class BoardService {
         return boardDto;
     }
 
+    @Transactional
+    public void deletePost(Long id) {
+        boardRepository.deleteById(id);
+    }
+
 }
