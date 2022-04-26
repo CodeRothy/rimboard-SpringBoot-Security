@@ -17,16 +17,16 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-    @GetMapping("/list")
+    @GetMapping("/")
     public String list(Model model) {
         List<BoardDto> boardDtoList = boardService.getBoardList();
         model.addAttribute("postList", boardDtoList);
-        return "board/list.html";
+        return "board/list";
     }
 
     @GetMapping("/post")
     public String post() {
-        return "board/post.html";
+        return "board/post";
     }
 
     @PostMapping("/post")
@@ -39,20 +39,20 @@ public class BoardController {
     public String detail(@PathVariable("id") Long id, Model model) {
         BoardDto boardDto = boardService.getPost(id);
         model.addAttribute("post", boardDto);
-        return "board/detail.html";
+        return "board/detail";
     }
 
     @GetMapping("/post/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model) {
         BoardDto boardDto = boardService.getPost(id);
         model.addAttribute("post", boardDto);
-        return "board/edit.html";
+        return "board/edit";
     }
 
     @PutMapping("/post/edit/{id}")
-    public String update(BoardDto boardDto) {
+    public String update( BoardDto boardDto) {
         boardService.savePost(boardDto);
-        return "redirect:/";
+        return "redirect:/post/{id}";
     }
 
     @DeleteMapping("/post/{id}")
