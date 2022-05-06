@@ -2,6 +2,7 @@ package kr.rimu.rimboard.config;
 
 import kr.rimu.rimboard.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 @RequiredArgsConstructor
 @EnableJpaAuditing
@@ -18,7 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) { // static 하위 파일 목록(css, js, img) 인증 무시
-        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
+
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                .antMatchers("/favicon.ico", "/resources/**", "/error");
     }
 
     @Override
@@ -33,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin() // 로그인에 관한 설정
                         .loginPage("/login") // 로그인 페이지 링크
                         .defaultSuccessUrl("/post/list") // 로그인 성공 후 리다이렉트 주소
+
                 .and()
                     .logout() // 로그아웃
                         .logoutSuccessUrl("/post/list") // 로그아웃 성공시 리다이렉트 주소
